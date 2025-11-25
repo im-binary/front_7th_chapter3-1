@@ -108,10 +108,10 @@
   padding: 8px 10px;
   font-size: var(--font-size-btn-md);
   font-family: Arial, sans-serif;
-  color: var(--color-black);
+  color: var(--color-text-primary);
   border: 1px solid var(--color-gray-400);
   border-radius: 3px;
-  background-color: var(--color-white);
+  background-color: var(--color-bg-primary);
   box-sizing: border-box;
 }
 
@@ -161,7 +161,7 @@
   border-radius: 4px;
   margin-bottom: 16px;
   overflow: hidden;
-  background-color: var(--color-white);
+  background-color: var(--color-bg-primary);
   font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
 }
 
@@ -183,7 +183,7 @@
 .card-flat {
   border: 1px solid var(--color-border-light);
   box-shadow: var(--shadow-none);
-  background-color: var(--color-gray-50);
+  background-color: var(--color-bg-secondary);
 }
 
 .card-header {
@@ -192,7 +192,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: var(--color-gray-50);
+  background-color: var(--color-bg-secondary);
 }
 
 .card-title {
@@ -385,7 +385,7 @@
   justify-content: center;
   transition: all var(--transition-duration-fast) var(--transition-ease-in-out);
   cursor: pointer;
-  background-color: var(--color-white);
+  background-color: var(--color-bg-primary);
 }
 
 .checkbox-custom.checked {
@@ -455,7 +455,7 @@
   color: var(--color-text-primary);
   border: 1px solid var(--color-border-strong);
   border-radius: 4px;
-  background-color: var(--color-white);
+  background-color: var(--color-bg-primary);
   box-sizing: border-box;
   transition: border-color var(--transition-duration-base)
     var(--transition-ease-out);
@@ -501,11 +501,11 @@
   border-collapse: collapse;
   font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
   font-size: var(--font-size-base);
-  background-color: var(--color-white);
+  background-color: var(--color-bg-primary);
 }
 
 .table thead {
-  background-color: var(--color-gray-50);
+  background-color: var(--color-bg-secondary);
 }
 
 .table th {
@@ -530,7 +530,7 @@
 }
 
 .table-striped tbody tr:nth-child(even) {
-  background-color: var(--color-gray-50);
+  background-color: var(--color-bg-secondary);
 }
 
 .table-bordered {
@@ -562,7 +562,7 @@
 }
 
 .modal-content {
-  background-color: var(--color-white);
+  background-color: var(--color-bg-primary);
   border-radius: 4px;
   box-shadow: var(--shadow-lg);
   max-height: 90vh;

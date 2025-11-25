@@ -1,5 +1,5 @@
 @theme {
-  /* ----- Colors ----- */
+  /* ----- Base Color Palette ----- */
   /* Blue */
   --color-blue-50: #e3f2fd;
   --color-blue-500: #1976d2;
@@ -47,6 +47,7 @@
   --color-white: #fff;
   --color-black: #000;
 
+  /* ----- Semantic Colors ----- */
   /* Primary - 주요 브랜드 색상 */
   --color-primary-50: var(--color-blue-50);
   --color-primary-500: var(--color-blue-500);
@@ -96,5 +97,24 @@
   --color-text-disabled: rgba(0, 0, 0, 0.12);
 
   /* Background */
+  --color-bg-primary: #fff;
+  --color-bg-secondary: #fafafa;
   --color-bg-hover: rgba(0, 0, 0, 0.04);
+}
+
+.dark {
+  /* Border */
+  --color-border-base: rgba(255, 255, 255, 0.12);
+  --color-border-light: rgba(255, 255, 255, 0.08);
+  --color-border-strong: rgba(255, 255, 255, 0.23);
+
+  /* Text */
+  --color-text-primary: rgba(255, 255, 255, 0.87);
+  --color-text-secondary: rgba(255, 255, 255, 0.6);
+  --color-text-disabled: rgba(255, 255, 255, 0.12);
+
+  /* Background */
+  --color-bg-primary: #121212;
+  --color-bg-secondary: #1e1e1e;
+  --color-bg-hover: rgba(255, 255, 255, 0.08);
 }
