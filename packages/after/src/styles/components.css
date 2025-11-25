@@ -1,6 +1,7 @@
 @import 'tailwindcss';
 
 @theme {
+  /* ----- Colors ----- */
   /* Blue */
   --color-blue-50: #e3f2fd;
   --color-blue-500: #1976d2;
@@ -98,6 +99,43 @@
 
   /* Background */
   --color-bg-hover: rgba(0, 0, 0, 0.04);
+
+  /* ----- Font Sizes ----- */
+  --font-size-xs: 0.625rem; /* 10px */
+  --font-size-sm: 0.75rem; /* 12px */
+  --font-size-base: 0.875rem; /* 14px */
+  --font-size-md: 0.9375rem; /* 15px */
+  --font-size-lg: 1rem; /* 16px */
+  --font-size-xl: 1.125rem; /* 18px */
+  --font-size-2xl: 1.25rem; /* 20px */
+
+  /* Specific component sizes */
+  /* Button */
+  --font-size-btn-sm: 0.8125rem; /* 13px */
+  --font-size-btn-md: 0.875rem; /* 14px */
+  --font-size-btn-lg: 0.9375rem; /* 15px */
+
+  /* Badge */
+  --font-size-badge-sm: 0.625rem; /* 10px */
+  --font-size-badge-md: 0.75rem; /* 12px */
+  --font-size-badge-lg: 0.8125rem; /* 13px */
+
+  /* Table */
+  --font-size-table-header: 0.75rem; /* 12px */
+
+  /* ----- Font Weight ----- */
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  /* ----- Line Height ----- */
+  --line-height-none: 1;
+  --line-height-tight: 1.25;
+  --line-height-snug: 1.375;
+  --line-height-normal: 1.5;
+  --line-height-relaxed: 1.625;
+  --line-height-loose: 2;
 }
 
 * {
@@ -109,8 +147,8 @@
 .btn {
   display: inline-block;
   font-family: Arial, sans-serif;
-  font-weight: normal;
-  line-height: 1.5;
+  font-weight: var(--font-weight-normal);
+  line-height: var(--line-height-normal);
   border-radius: 3px;
   cursor: pointer;
   border: 1px solid;
@@ -164,17 +202,17 @@
 
 .btn-sm {
   padding: 6px 12px;
-  font-size: 13px;
+  font-size: var(--font-size-btn-sm);
 }
 
 .btn-md {
   padding: 10px 20px;
-  font-size: 14px;
+  font-size: var(--font-size-btn-md);
 }
 
 .btn-lg {
   padding: 12px 24px;
-  font-size: 15px;
+  font-size: var(--font-size-btn-lg);
 }
 
 .btn-fullwidth {
@@ -190,8 +228,8 @@
   display: block;
   margin-bottom: 6px;
   color: var(--color-gray-900);
-  font-size: 13px;
-  font-weight: bold;
+  font-size: var(--font-size-btn-sm);
+  font-weight: var(--font-weight-bold);
   font-family: Arial, sans-serif;
 }
 
@@ -199,7 +237,7 @@
 .form-select {
   width: 100%;
   padding: 8px 10px;
-  font-size: 14px;
+  font-size: var(--font-size-btn-md);
   font-family: Arial, sans-serif;
   color: var(--color-black);
   border: 1px solid var(--color-gray-400);
@@ -227,7 +265,7 @@
 
 .form-helper-text {
   color: var(--color-gray-600);
-  font-size: 12px;
+  font-size: var(--font-size-sm);
   font-family: Arial, sans-serif;
   margin-top: 4px;
 }
@@ -296,17 +334,17 @@
 
 .card-title {
   margin: 0;
-  font-size: 1.125rem;
-  font-weight: 500;
-  line-height: 1.6;
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-relaxed);
   color: var(--color-text-primary);
 }
 
 .card-subtitle {
   margin: 4px 0 0 0;
-  font-size: 0.875rem;
-  font-weight: 400;
-  line-height: 1.43;
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-normal);
+  line-height: var(--line-height-snug);
   color: var(--color-text-secondary);
 }
 
@@ -319,9 +357,9 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  font-weight: bold;
+  font-weight: var(--font-weight-bold);
   font-family: Arial, sans-serif;
-  line-height: 1;
+  line-height: var(--line-height-none);
   white-space: nowrap;
   border-radius: 3px;
 }
@@ -357,19 +395,19 @@
 
 .badge-small {
   padding: 0px 4px;
-  font-size: 0.625rem;
+  font-size: var(--font-size-badge-sm);
   height: 16px;
 }
 
 .badge-medium {
   padding: 0px 8px;
-  font-size: 0.75rem;
+  font-size: var(--font-size-badge-md);
   height: 20px;
 }
 
 .badge-large {
   padding: 0px 10px;
-  font-size: 0.8125rem;
+  font-size: var(--font-size-badge-lg);
   height: 24px;
 }
 
@@ -416,7 +454,7 @@
 }
 
 .alert-icon {
-  font-size: 20px;
+  font-size: var(--font-size-2xl);
   flex-shrink: 0;
 }
 
@@ -425,21 +463,21 @@
 }
 
 .alert-title {
-  font-weight: bold;
+  font-weight: var(--font-weight-bold);
   margin-bottom: 4px;
-  font-size: 15px;
+  font-size: var(--font-size-md);
 }
 
 .alert-body {
-  font-size: 14px;
-  line-height: 1.5;
+  font-size: var(--font-size-btn-md);
+  line-height: var(--line-height-normal);
 }
 
 .alert-close {
   background: none;
   border: none;
   cursor: pointer;
-  font-size: 20px;
+  font-size: var(--font-size-2xl);
   padding: 0 4px;
   margin-left: auto;
   flex-shrink: 0;
@@ -498,7 +536,7 @@
 
 .checkbox-checkmark {
   color: var(--color-white);
-  font-size: 10px;
+  font-size: var(--font-size-xs);
   font-weight: bold;
   display: none;
 }
@@ -508,7 +546,7 @@
 }
 
 .checkbox-label {
-  font-size: 14px;
+  font-size: var(--font-size-base);
   color: var(--color-gray-800);
   cursor: pointer;
   line-height: 1.4;
@@ -526,7 +564,7 @@
 
 .checkbox-hint {
   color: var(--color-gray-600);
-  font-size: 12px;
+  font-size: var(--font-size-sm);
   margin-top: 2px;
   margin-left: 24px;
   display: block;
@@ -535,7 +573,7 @@
 
 .checkbox-error {
   color: var(--color-danger-500);
-  font-size: 12px;
+  font-size: var(--font-size-sm);
   margin-top: 2px;
   margin-left: 24px;
   display: block;
@@ -547,10 +585,10 @@
   width: 100%;
   min-height: 6em;
   padding: 16.5px 14px;
-  font-size: 16px;
+  font-size: var(--font-size-lg);
   font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
-  font-weight: 400;
-  line-height: 1.1876em;
+  font-weight: var(--font-weight-normal);
+  line-height: var(--line-height-tight);
   color: var(--color-text-primary);
   border: 1px solid var(--color-border-strong);
   border-radius: 4px;
@@ -598,7 +636,7 @@
   width: 100%;
   border-collapse: collapse;
   font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
-  font-size: 0.875rem;
+  font-size: var(--font-size-base);
   background-color: var(--color-white);
 }
 
@@ -609,8 +647,8 @@
 .table th {
   padding: 16px;
   text-align: left;
-  font-weight: 500;
-  font-size: 0.75rem;
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-table-header);
   color: var(--color-text-secondary);
   text-transform: uppercase;
   letter-spacing: 0.03em;
@@ -697,8 +735,8 @@
 
 .modal-title {
   margin: 0;
-  font-size: 1.25rem;
-  font-weight: 500;
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-medium);
   color: var(--color-text-primary);
 }
 
@@ -706,7 +744,7 @@
   background: none;
   border: none;
   font-size: 28px;
-  line-height: 1;
+  line-height: var(--line-height-none);
   color: var(--color-text-secondary);
   cursor: pointer;
   padding: 0;
