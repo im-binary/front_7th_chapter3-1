@@ -1,4 +1,4 @@
-@theme {
+:root {
   /* ----- Transitions ----- */
   /* Duration */
   --transition-duration-fast: 150ms;

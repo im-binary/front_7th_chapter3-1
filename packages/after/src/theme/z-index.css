@@ -1,4 +1,4 @@
-@theme {
+:root {
   /* ----- Z-Index (Layering) ----- */
   --z-index-base: 0;
   --z-index-dropdown: 1000;

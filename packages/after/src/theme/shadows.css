@@ -1,4 +1,4 @@
-@theme {
+:root {
   /* ----- Shadows (Elevation) ----- */
   --shadow-none: none;
   --shadow-sm:
