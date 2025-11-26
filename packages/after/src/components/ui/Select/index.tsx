@@ -123,6 +123,8 @@ const selectItemVariants = cva(
     'focus:text-accent-foreground',
     'data-[disabled]:pointer-events-none',
     'data-[disabled]:opacity-50',
+    'hover:bg-[var(--color-secondary-100)]',
+    'data-[highlighted]:bg-[var(--color-secondary-200)]',
   ],
   {
     variants: {
@@ -137,6 +139,22 @@ const selectItemVariants = cva(
     },
   }
 );
+
+const selectViewportVariants = cva(['p-1'], {
+  variants: {
+    position: {
+      popper: [
+        'h-[var(--radix-select-trigger-height)]',
+        'w-full',
+        'min-w-[var(--radix-select-trigger-width)]',
+      ],
+      'item-aligned': [],
+    },
+  },
+  defaultVariants: {
+    position: 'popper',
+  },
+});
 
 const SelectRoot = (props: SelectRootProps) => {
   const { size = 'md', ...restProps } = props;
@@ -229,11 +247,7 @@ const SelectContent = forwardRef<HTMLDivElement, SelectContentProps>(
         >
           <SelectScrollUpButton />
           <SelectPrimitive.Viewport
-            className={cn(
-              'p-1',
-              position === 'popper' &&
-                'h-[var(--radix-select-trigger-height)] w-full min-w-[var(--radix-select-trigger-width)]'
-            )}
+            className={selectViewportVariants({ position })}
           >
             {children}
           </SelectPrimitive.Viewport>
