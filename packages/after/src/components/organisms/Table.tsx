@@ -302,35 +302,27 @@ export const Table: React.FC<TableProps> = ({
             justifyContent: 'center',
           }}
         >
-          <button
+          <Button
             onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
             disabled={currentPage === 1}
-            style={{
-              padding: '6px 12px',
-              border: '1px solid #ddd',
-              background: 'white',
-              borderRadius: '4px',
-              cursor: currentPage === 1 ? 'not-allowed' : 'pointer',
-            }}
+            size="sm"
+            outline={true}
+            variant="secondary"
           >
             이전
-          </button>
+          </Button>
           <span style={{ padding: '6px 12px' }}>
             {currentPage} / {totalPages}
           </span>
-          <button
+          <Button
             onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
             disabled={currentPage === totalPages}
-            style={{
-              padding: '6px 12px',
-              border: '1px solid #ddd',
-              background: 'white',
-              borderRadius: '4px',
-              cursor: currentPage === totalPages ? 'not-allowed' : 'pointer',
-            }}
+            size="sm"
+            outline={true}
+            variant="secondary"
           >
             다음
-          </button>
+          </Button>
         </div>
       )}
     </div>
