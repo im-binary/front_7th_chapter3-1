@@ -2,11 +2,12 @@ import { forwardRef, useState } from 'react';
 import { Input } from '@/components/ui/Input';
 import type { InputProps } from '@/components/ui/Input/types';
 
-interface FormInputProps extends InputProps {
+interface FormInputProps extends Omit<InputProps, 'onChange'> {
   name: string;
   label?: string;
   helpText?: string;
   required?: boolean;
+  onChange?: (value: string) => void;
 
   // 🚨 도메인 관심사 추가
   fieldType?: 'username' | 'email' | 'postTitle' | 'slug' | 'normal';
@@ -87,7 +88,7 @@ const FormInput = forwardRef<HTMLInputElement, FormInputProps>((props, ref) => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = e.target.value;
 
-    onChange?.(e);
+    onChange?.(newValue);
     validateField(newValue);
   };
 
