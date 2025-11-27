@@ -6,9 +6,6 @@ import type { ButtonProps } from './types';
 import { buttonVariants } from './styles';
 
 /**
- * ============================================================================
- * ⚠️ REFACTORING NOTE: 도메인 로직 분리 완료
- * ============================================================================
  *
  * @see /src/hooks/useEntityAction.ts - 비즈니스 로직 Hook
  *
