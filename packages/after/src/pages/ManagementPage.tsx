@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Button, Badge } from '../components/atoms';
+import { Button } from '../components/atoms';
 import { Alert, Table, Modal } from '../components/organisms';
 import { FormInput, FormSelect, FormTextarea } from '../components/molecules';
 import { userService } from '../services/userService';
 import { postService } from '../services/postService';
+import { validateField } from '../utils/fieldValidators';
 import type { User } from '../services/userService';
 import type { Post } from '../services/postService';
 
@@ -23,9 +24,16 @@ export const ManagementPage: React.FC = () => {
 
   const [formData, setFormData] = useState<any>({});
 
+  const [validationErrors, setValidationErrors] = useState<{
+    username?: string;
+    email?: string;
+    title?: string;
+  }>({});
+
   useEffect(() => {
     loadData();
     setFormData({});
+    setValidationErrors({});
     setIsCreateModalOpen(false);
     setIsEditModalOpen(false);
     setSelectedItem(null);
@@ -127,6 +135,36 @@ export const ManagementPage: React.FC = () => {
       setErrorMessage(error.message || '수정에 실패했습니다');
       setShowErrorAlert(true);
     }
+  };
+
+  // Validation handlers
+  const handleUsernameChange = (value: string) => {
+    setFormData({ ...formData, username: value });
+    const error = validateField(value, {
+      fieldType: 'username',
+      checkBusinessRules: true,
+    });
+    setValidationErrors({ ...validationErrors, username: error });
+  };
+
+  const handleEmailChange = (value: string) => {
+    setFormData({ ...formData, email: value });
+    const error = validateField(value, {
+      fieldType: 'email',
+      entityType: 'user',
+      checkBusinessRules: true,
+    });
+    setValidationErrors({ ...validationErrors, email: error });
+  };
+
+  const handleTitleChange = (value: string) => {
+    setFormData({ ...formData, title: value });
+    const error = validateField(value, {
+      fieldType: 'postTitle',
+      entityType: 'post',
+      checkBusinessRules: true,
+    });
+    setValidationErrors({ ...validationErrors, title: error });
   };
 
   const handleDelete = async (id: number) => {
@@ -548,25 +586,23 @@ export const ManagementPage: React.FC = () => {
               <FormInput
                 name="username"
                 value={formData.username || ''}
-                onChange={(value) =>
-                  setFormData({ ...formData, username: value })
-                }
+                onChange={handleUsernameChange}
+                error={validationErrors.username}
                 label="사용자명"
                 placeholder="사용자명을 입력하세요"
                 required
                 width="full"
-                fieldType="username"
               />
               <FormInput
                 name="email"
                 value={formData.email || ''}
-                onChange={(value) => setFormData({ ...formData, email: value })}
+                onChange={handleEmailChange}
+                error={validationErrors.email}
                 label="이메일"
                 placeholder="이메일을 입력하세요"
                 type="email"
                 required
                 width="full"
-                fieldType="email"
               />
               <div
                 style={{
@@ -610,12 +646,12 @@ export const ManagementPage: React.FC = () => {
               <FormInput
                 name="title"
                 value={formData.title || ''}
-                onChange={(value) => setFormData({ ...formData, title: value })}
+                onChange={handleTitleChange}
+                error={validationErrors.title}
                 label="제목"
                 placeholder="게시글 제목을 입력하세요"
                 required
                 width="full"
-                fieldType="postTitle"
               />
               <div
                 style={{
@@ -709,25 +745,23 @@ export const ManagementPage: React.FC = () => {
               <FormInput
                 name="username"
                 value={formData.username || ''}
-                onChange={(value) =>
-                  setFormData({ ...formData, username: value })
-                }
+                onChange={handleUsernameChange}
+                error={validationErrors.username}
                 label="사용자명"
                 placeholder="사용자명을 입력하세요"
                 required
                 width="full"
-                fieldType="username"
               />
               <FormInput
                 name="email"
                 value={formData.email || ''}
-                onChange={(value) => setFormData({ ...formData, email: value })}
+                onChange={handleEmailChange}
+                error={validationErrors.email}
                 label="이메일"
                 placeholder="이메일을 입력하세요"
                 type="email"
                 required
                 width="full"
-                fieldType="email"
               />
               <div
                 style={{
@@ -771,12 +805,12 @@ export const ManagementPage: React.FC = () => {
               <FormInput
                 name="title"
                 value={formData.title || ''}
-                onChange={(value) => setFormData({ ...formData, title: value })}
+                onChange={handleTitleChange}
+                error={validationErrors.title}
                 label="제목"
                 placeholder="게시글 제목을 입력하세요"
                 required
                 width="full"
-                fieldType="postTitle"
               />
               <div
                 style={{
