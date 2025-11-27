@@ -17,14 +17,18 @@ interface FormInputProps extends InputProps {
 const FormInput = forwardRef<HTMLInputElement, FormInputProps>((props, ref) => {
   const {
     name,
+    value,
+    onChange,
     label,
+    type = 'text',
+    placeholder,
+    required = false,
+    disabled = false,
     error,
     helpText,
-    required = false,
     fieldType = 'normal',
     entityType,
     checkBusinessRules = false,
-    onChange,
     ...restProps
   } = props;
 
@@ -81,8 +85,10 @@ const FormInput = forwardRef<HTMLInputElement, FormInputProps>((props, ref) => {
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newValue = e.target.value;
+
     onChange?.(e);
-    validateField(e.target.value);
+    validateField(newValue);
   };
 
   const displayError = error || internalError;
@@ -105,9 +111,13 @@ const FormInput = forwardRef<HTMLInputElement, FormInputProps>((props, ref) => {
         ref={ref}
         id={name}
         name={name}
-        error={!!displayError}
+        type={type}
+        value={value}
         onChange={handleChange}
+        placeholder={placeholder}
         required={required}
+        disabled={disabled}
+        error={!!displayError}
         {...restProps}
       />
 
