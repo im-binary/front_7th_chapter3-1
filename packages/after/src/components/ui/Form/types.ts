@@ -13,19 +13,17 @@ export interface FormFieldProps {
   children: ReactNode;
 }
 
-export interface FormLabelProps extends LabelHTMLAttributes<HTMLLabelElement> {}
+export type FormLabelProps = LabelHTMLAttributes<HTMLLabelElement>;
 
-export interface FormInputProps extends Omit<InputProps, 'size' | 'error'> {}
+export type FormInputProps = Omit<InputProps, 'size' | 'error'>;
 
 export interface FormSelectProps extends Omit<SelectProps, 'size' | 'error'> {
   options: Array<{ value: string; label: string }>;
   placeholder?: string;
 }
 
-export interface FormTextareaProps extends Omit<TextareaProps, 'error'> {}
+export type FormTextareaProps = Omit<TextareaProps, 'error'>;
 
-export interface FormDescriptionProps
-  extends HTMLAttributes<HTMLParagraphElement> {}
+export type FormDescriptionProps = HTMLAttributes<HTMLParagraphElement>;
 
-export interface FormMessageProps
-  extends HTMLAttributes<HTMLParagraphElement> {}
+export type FormMessageProps = HTMLAttributes<HTMLParagraphElement>;

@@ -1,8 +1,5 @@
 import * as SelectPrimitive from '@radix-ui/react-select';
 
-/**
- * Select 루트 컴포넌트의 Props
- */
 export interface SelectRootProps extends SelectPrimitive.SelectProps {
   /**
    * Select의 크기
@@ -22,17 +19,14 @@ export interface SelectTriggerProps extends SelectPrimitive.SelectTriggerProps {
   error?: boolean;
 }
 
-export interface SelectScrollUpButtonProps
-  extends SelectPrimitive.SelectScrollUpButtonProps {}
+export type SelectScrollUpButtonProps =
+  SelectPrimitive.SelectScrollUpButtonProps;
 
-export interface SelectScrollDownButtonProps
-  extends SelectPrimitive.SelectScrollDownButtonProps {}
+export type SelectScrollDownButtonProps =
+  SelectPrimitive.SelectScrollDownButtonProps;
 
-export interface SelectProps extends SelectPrimitive.SelectProps {}
+export type SelectProps = SelectPrimitive.SelectProps;
 
-/**
- * Select Content (드롭다운) 컴포넌트의 Props
- */
 export interface SelectContentProps extends SelectPrimitive.SelectContentProps {
   /**
    * 드롭다운이 렌더링될 컨테이너
@@ -40,7 +34,4 @@ export interface SelectContentProps extends SelectPrimitive.SelectContentProps {
   container?: HTMLElement;
 }
 
-/**
- * Select Item (옵션) 컴포넌트의 Props
- */
-export interface SelectItemProps extends SelectPrimitive.SelectItemProps {}
+export type SelectItemProps = SelectPrimitive.SelectItemProps;

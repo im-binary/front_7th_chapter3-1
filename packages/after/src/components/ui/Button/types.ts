@@ -1,6 +1,6 @@
 import type { ButtonHTMLAttributes } from 'react';
 import type { VariantProps } from 'class-variance-authority';
-import type { buttonVariants } from '.';
+import { buttonVariants } from './styles';
 
 /**
  * Button 컴포넌트의 Props

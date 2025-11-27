@@ -1,6 +1,6 @@
 import type { VariantProps } from 'class-variance-authority';
 import type { InputHTMLAttributes } from 'react';
-import type { inputVariants } from './index';
+import type { inputVariants } from './styles';
 
 /**
  * Input 컴포넌트의 Props
