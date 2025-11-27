@@ -179,7 +179,6 @@ const FormRoot = forwardRef<
   return <form ref={ref} {...props} />;
 });
 
-// Export as compound component
 export const Form = Object.assign(FormRoot, {
   Field: FormField,
   Label: FormLabel,
