@@ -90,8 +90,8 @@ const FormControl = forwardRef<ComponentRef<typeof Slot>, FormControlProps>(
             : `${formDescriptionId} ${formMessageId}`
         }
         aria-invalid={!!error}
-        {...(props as any)}
         {...(size && { size })}
+        {...props}
       />
     );
   }
