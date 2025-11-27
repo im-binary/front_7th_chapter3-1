@@ -3,7 +3,24 @@ import { IconButton } from '../ui/IconButton';
 import { Moon, Sun } from 'lucide-react';
 
 export const Header: React.FC = () => {
-  const [isDarkMode, setIsDarkMode] = React.useState(false);
+  const [isDarkMode, setIsDarkMode] = React.useState(() => {
+    // 시스템 설정 확인
+    if (typeof window !== 'undefined') {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches;
+    }
+    return false;
+  });
+
+  React.useEffect(() => {
+    // 시스템 설정 변경 감지
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    const handleChange = (e: MediaQueryListEvent) => {
+      setIsDarkMode(e.matches);
+    };
+
+    mediaQuery.addEventListener('change', handleChange);
+    return () => mediaQuery.removeEventListener('change', handleChange);
+  }, []);
 
   React.useEffect(() => {
     if (isDarkMode) {
