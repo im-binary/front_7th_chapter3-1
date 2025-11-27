@@ -408,7 +408,9 @@ export const ManagementPage: React.FC = () => {
   const stats = getStats();
 
   return (
-    <div style={{ minHeight: '100vh', background: '#f0f0f0' }}>
+    <div
+      style={{ minHeight: '100vh', background: 'var(--color-bg-secondary)' }}
+    >
       <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '20px' }}>
         <div style={{ marginBottom: '20px' }}>
           <h1
@@ -416,27 +418,27 @@ export const ManagementPage: React.FC = () => {
               fontSize: '24px',
               fontWeight: 'bold',
               marginBottom: '5px',
-              color: '#333',
+              color: 'var(--color-text-primary)',
             }}
           >
             관리 시스템
           </h1>
-          <p style={{ color: '#666', fontSize: '14px' }}>
+          <p style={{ color: 'var(--color-text-secondary)', fontSize: '14px' }}>
             사용자와 게시글을 관리하세요
           </p>
         </div>
 
         <div
           style={{
-            background: 'white',
-            border: '1px solid #ddd',
+            background: 'var(--color-bg-primary)',
+            border: '1px solid var(--color-border-base)',
             padding: '10px',
           }}
         >
           <div
             style={{
               marginBottom: '15px',
-              borderBottom: '2px solid #ccc',
+              borderBottom: '1px solid var(--color-border-base)',
               paddingBottom: '5px',
             }}
           >

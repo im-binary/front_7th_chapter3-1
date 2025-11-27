@@ -1,11 +1,23 @@
 import React from 'react';
+import { IconButton } from '../ui/IconButton';
+import { Moon, Sun } from 'lucide-react';
 
 export const Header: React.FC = () => {
+  const [isDarkMode, setIsDarkMode] = React.useState(false);
+
+  React.useEffect(() => {
+    if (isDarkMode) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  }, [isDarkMode]);
+
   return (
     <header
       style={{
-        backgroundColor: '#ffffff',
-        borderBottom: '1px solid #e5e7eb',
+        backgroundColor: 'var(--color-bg-primary)',
+        borderBottom: '1px solid var(--color-border-base)',
         boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.1)',
         position: 'sticky',
         top: 0,
@@ -52,7 +64,7 @@ export const Header: React.FC = () => {
               style={{
                 fontSize: '18px',
                 fontWeight: '700',
-                color: '#1a202c',
+                color: 'var(--color-text-primary)',
                 margin: 0,
                 lineHeight: 1,
               }}
@@ -62,7 +74,7 @@ export const Header: React.FC = () => {
             <p
               style={{
                 fontSize: '11px',
-                color: '#718096',
+                color: 'var(--color-text-secondary)',
                 margin: 0,
                 lineHeight: 1,
                 marginTop: '2px',
@@ -90,7 +102,7 @@ export const Header: React.FC = () => {
               style={{
                 fontSize: '14px',
                 fontWeight: '600',
-                color: '#1a202c',
+                color: 'var(--color-text-primary)',
               }}
             >
               Demo User
@@ -98,7 +110,7 @@ export const Header: React.FC = () => {
             <div
               style={{
                 fontSize: '12px',
-                color: '#718096',
+                color: 'var(--color-text-secondary)',
               }}
             >
               demo@example.com
@@ -120,6 +132,19 @@ export const Header: React.FC = () => {
           >
             DU
           </div>
+          <IconButton
+            variant="secondary"
+            size="md"
+            icon={
+              isDarkMode ? (
+                <Sun className="h-5 w-5" />
+              ) : (
+                <Moon className="h-5 w-5" />
+              )
+            }
+            onClick={() => setIsDarkMode(!isDarkMode)}
+            aria-label={isDarkMode ? '라이트 모드로 전환' : '다크 모드로 전환'}
+          />
         </div>
       </div>
     </header>
