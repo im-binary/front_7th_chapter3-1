@@ -156,7 +156,7 @@ const FormMessage = forwardRef<HTMLParagraphElement, FormMessageProps>(
       <p
         ref={ref}
         className={cn(
-          'block mt-[var(--spacing-xs)] text-[length:var(--font-size-sm)]',
+          'block text-[length:var(--font-size-sm)]',
           sizeStyles[size || 'md'],
           'text-[var(--color-danger-500)]',
           className
