@@ -46,11 +46,13 @@ export const textareaVariants = cva(
 );
 
 export const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
-  ({ className, error, ...props }, ref) => {
+  ({ value, onChange, className, error, ...props }, ref) => {
     return (
       <textarea
         className={cn(textareaVariants({ error, className }))}
         ref={ref}
+        value={value}
+        onChange={onChange}
         {...props}
       />
     );
