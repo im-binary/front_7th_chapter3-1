@@ -141,32 +141,34 @@ export const WithGroups: Story = {
   ),
 };
 
+const InteractiveSelect = (args: React.ComponentProps<typeof Select>) => {
+  const [value, setValue] = useState('');
+
+  return (
+    <div className="space-y-4">
+      <Select {...args} value={value} onValueChange={setValue}>
+        <Select.Trigger className="w-[200px]">
+          <Select.Value placeholder="과일을 선택하세요" />
+        </Select.Trigger>
+        <Select.Content>
+          {fruits.map((fruit) => (
+            <Select.Item key={fruit.value} value={fruit.value}>
+              {fruit.label}
+            </Select.Item>
+          ))}
+        </Select.Content>
+      </Select>
+      <p className="text-sm text-gray-600">
+        선택된 값: <strong>{value || '(없음)'}</strong>
+      </p>
+    </div>
+  );
+};
+
 export const Playground: Story = {
   args: {
     size: 'md',
     value: '',
   },
-  render: (args) => {
-    const [value, setValue] = useState('');
-
-    return (
-      <div className="space-y-4">
-        <Select {...args} value={value} onValueChange={setValue}>
-          <Select.Trigger className="w-[200px]">
-            <Select.Value placeholder="과일을 선택하세요" />
-          </Select.Trigger>
-          <Select.Content>
-            {fruits.map((fruit) => (
-              <Select.Item key={fruit.value} value={fruit.value}>
-                {fruit.label}
-              </Select.Item>
-            ))}
-          </Select.Content>
-        </Select>
-        <p className="text-sm text-gray-600">
-          선택된 값: <strong>{value || '(없음)'}</strong>
-        </p>
-      </div>
-    );
-  },
+  render: (args) => <InteractiveSelect {...args} />,
 };

@@ -120,7 +120,43 @@ export const Disabled: Story = {
   },
 };
 
-export const Interactive: Story = {
+const InteractiveFormSelect = (
+  args: React.ComponentProps<typeof FormSelect>
+) => {
+  const [value, setValue] = useState('');
+  const [error, setError] = useState('');
+
+  const options = [
+    { value: 'korea', label: '한국' },
+    { value: 'usa', label: '미국' },
+    { value: 'japan', label: '일본' },
+    { value: 'china', label: '중국' },
+  ];
+
+  const handleChange = (newValue: string) => {
+    setValue(newValue);
+    if (!newValue) {
+      setError('국가를 선택해주세요');
+    } else {
+      setError('');
+    }
+  };
+
+  return (
+    <div className="space-y-4">
+      <FormSelect
+        {...args}
+        options={options}
+        value={value}
+        onChange={handleChange}
+        error={error}
+      />
+      <p className="text-sm text-gray-600">선택된 값: {value || '(없음)'}</p>
+    </div>
+  );
+};
+
+export const Playground: Story = {
   args: {
     name: 'country',
     label: '국가 선택',
@@ -138,37 +174,5 @@ export const Interactive: Story = {
       table: { disable: true },
     },
   },
-  render: (args) => {
-    const [value, setValue] = useState('');
-    const [error, setError] = useState('');
-
-    const options = [
-      { value: 'korea', label: '한국' },
-      { value: 'usa', label: '미국' },
-      { value: 'japan', label: '일본' },
-      { value: 'china', label: '중국' },
-    ];
-
-    const handleChange = (newValue: string) => {
-      setValue(newValue);
-      if (!newValue) {
-        setError('국가를 선택해주세요');
-      } else {
-        setError('');
-      }
-    };
-
-    return (
-      <div className="space-y-4">
-        <FormSelect
-          {...args}
-          options={options}
-          value={value}
-          onChange={handleChange}
-          error={error}
-        />
-        <p className="text-sm text-gray-600">선택된 값: {value || '(없음)'}</p>
-      </div>
-    );
-  },
+  render: (args) => <InteractiveFormSelect {...args} />,
 };

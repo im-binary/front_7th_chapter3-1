@@ -112,6 +112,34 @@ export const Disabled: Story = {
   },
 };
 
+const InteractiveFormInput = (args: React.ComponentProps<typeof FormInput>) => {
+  const [value, setValue] = useState('');
+  const [error, setError] = useState('');
+
+  const handleChange = (newValue: string) => {
+    setValue(newValue);
+    if (newValue.length < 3) {
+      setError('최소 3자 이상 입력하세요');
+    } else {
+      setError('');
+    }
+  };
+
+  return (
+    <>
+      <p> 최소 3자 이상 입력해야 합니다.</p>
+      <br />
+
+      <FormInput
+        {...args}
+        value={value}
+        onChange={handleChange}
+        error={error}
+      />
+    </>
+  );
+};
+
 export const Playground: Story = {
   args: {
     name: 'input',
@@ -126,31 +154,5 @@ export const Playground: Story = {
       table: { disable: true },
     },
   },
-  render: (args) => {
-    const [value, setValue] = useState('');
-    const [error, setError] = useState('');
-
-    const handleChange = (newValue: string) => {
-      setValue(newValue);
-      if (newValue.length < 3) {
-        setError('최소 3자 이상 입력하세요');
-      } else {
-        setError('');
-      }
-    };
-
-    return (
-      <>
-        <p> 최소 3자 이상 입력해야 합니다.</p>
-        <br />
-
-        <FormInput
-          {...args}
-          value={value}
-          onChange={handleChange}
-          error={error}
-        />
-      </>
-    );
-  },
+  render: (args) => <InteractiveFormInput {...args} />,
 };

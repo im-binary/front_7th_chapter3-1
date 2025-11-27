@@ -77,6 +77,24 @@ export const Number: Story = {
   },
 };
 
+const InteractiveInput = (args: React.ComponentProps<typeof Input>) => {
+  const [value, setValue] = useState('');
+
+  return (
+    <div className="space-y-4">
+      <Input
+        {...args}
+        value={value}
+        onChange={(e) => setValue(e.target.value)}
+      />
+      <p className="text-sm text-gray-600">
+        입력된 값: <strong>{value || '(없음)'}</strong>
+      </p>
+      <p className="text-xs text-gray-500">글자 수: {value.length}</p>
+    </div>
+  );
+};
+
 export const Playground: Story = {
   args: {
     placeholder: '타이핑 해보세요...',
@@ -85,21 +103,5 @@ export const Playground: Story = {
     disabled: false,
     type: 'text',
   },
-  render: (args) => {
-    const [value, setValue] = useState('');
-
-    return (
-      <div className="space-y-4">
-        <Input
-          {...args}
-          value={value}
-          onChange={(e) => setValue(e.target.value)}
-        />
-        <p className="text-sm text-gray-600">
-          입력된 값: <strong>{value || '(없음)'}</strong>
-        </p>
-        <p className="text-xs text-gray-500">글자 수: {value.length}</p>
-      </div>
-    );
-  },
+  render: (args) => <InteractiveInput {...args} />,
 };

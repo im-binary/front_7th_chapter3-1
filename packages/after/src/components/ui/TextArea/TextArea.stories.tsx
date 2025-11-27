@@ -74,6 +74,30 @@ export const CustomRows: Story = {
   },
 };
 
+const InteractiveTextarea = (args: React.ComponentProps<typeof Textarea>) => {
+  const [value, setValue] = useState('');
+  const maxLength = 200;
+
+  return (
+    <div className="space-y-4">
+      <Textarea
+        {...args}
+        value={value}
+        onChange={(e) => setValue(e.target.value)}
+        error={value.length > maxLength}
+      />
+      <div className="space-y-1">
+        <p className="text-sm text-gray-600">
+          글자 수: {value.length} / {maxLength}
+        </p>
+        {value.length > maxLength && (
+          <p className="text-sm text-red-500">최대 글자 수를 초과했습니다!</p>
+        )}
+      </div>
+    </div>
+  );
+};
+
 export const Playground: Story = {
   args: {
     placeholder: '여기에 입력하세요...',
@@ -81,27 +105,5 @@ export const Playground: Story = {
     rows: 4,
     disabled: false,
   },
-  render: (args) => {
-    const [value, setValue] = useState('');
-    const maxLength = 200;
-
-    return (
-      <div className="space-y-4">
-        <Textarea
-          {...args}
-          value={value}
-          onChange={(e) => setValue(e.target.value)}
-          error={value.length > maxLength}
-        />
-        <div className="space-y-1">
-          <p className="text-sm text-gray-600">
-            글자 수: {value.length} / {maxLength}
-          </p>
-          {value.length > maxLength && (
-            <p className="text-sm text-red-500">최대 글자 수를 초과했습니다!</p>
-          )}
-        </div>
-      </div>
-    );
-  },
+  render: (args) => <InteractiveTextarea {...args} />,
 };

@@ -120,6 +120,41 @@ export const WithRows: Story = {
   },
 };
 
+const InteractiveTextarea = (args: typeof Default.args) => {
+  const [value, setValue] = useState('');
+  const [error, setError] = useState('');
+  const maxLength = 200;
+
+  const handleChange = (newValue: string) => {
+    setValue(newValue);
+    if (newValue.length < 10) {
+      setError('최소 10자 이상 입력하세요');
+    } else if (newValue.length > maxLength) {
+      setError(`최대 ${maxLength}자까지 입력 가능합니다`);
+    } else {
+      setError('');
+    }
+  };
+
+  return (
+    <div className="space-y-2">
+      <p className="text-sm text-gray-600">
+        최소 10자 이상 입력해야 합니다. / 최대 {maxLength}자까지 입력
+        가능합니다.
+      </p>
+      <FormTextarea
+        {...args}
+        value={value}
+        onChange={handleChange}
+        error={error}
+      />
+      <p className="text-sm text-gray-600">
+        {value.length} / {maxLength} 자
+      </p>
+    </div>
+  );
+};
+
 export const Playground: Story = {
   args: {
     name: 'playground-textarea',
@@ -137,38 +172,5 @@ export const Playground: Story = {
       table: { disable: true },
     },
   },
-  render: (args) => {
-    const [value, setValue] = useState('');
-    const [error, setError] = useState('');
-    const maxLength = 200;
-
-    const handleChange = (newValue: string) => {
-      setValue(newValue);
-      if (newValue.length < 10) {
-        setError('최소 10자 이상 입력하세요');
-      } else if (newValue.length > maxLength) {
-        setError(`최대 ${maxLength}자까지 입력 가능합니다`);
-      } else {
-        setError('');
-      }
-    };
-
-    return (
-      <div className="space-y-2">
-        <p className="text-sm text-gray-600">
-          최소 10자 이상 입력해야 합니다. / 최대 {maxLength}자까지 입력
-          가능합니다.
-        </p>
-        <FormTextarea
-          {...args}
-          value={value}
-          onChange={handleChange}
-          error={error}
-        />
-        <p className="text-sm text-gray-600">
-          {value.length} / {maxLength} 자
-        </p>
-      </div>
-    );
-  },
+  render: (args) => <InteractiveTextarea {...args} />,
 };
