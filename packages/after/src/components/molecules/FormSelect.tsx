@@ -1,5 +1,5 @@
 import React from 'react';
-import { Select } from '../ui/Select';
+import { Select } from '@/components/ui/Select';
 
 interface Option {
   value: string;

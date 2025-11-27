@@ -1,5 +1,5 @@
 import React from 'react';
-import { Textarea } from '../ui/TextArea';
+import { Textarea } from '@/components/ui/TextArea';
 
 // Textarea Component - Yet another inconsistent API
 interface FormTextareaProps {

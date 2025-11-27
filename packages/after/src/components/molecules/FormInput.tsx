@@ -1,6 +1,6 @@
 import { forwardRef, useState } from 'react';
-import { Input } from '../ui/Input';
-import type { InputProps } from '../ui/Input/types';
+import { Input } from '@/components/ui/Input';
+import type { InputProps } from '@/components/ui/Input/types';
 
 interface FormInputProps extends InputProps {
   name: string;
