@@ -13,12 +13,7 @@ import type {
   FormTextareaProps,
 } from './types';
 import { FormFieldProvider, useFormFieldContext } from './contexts';
-
-const sizeStyles = {
-  sm: 'text-[length:var(--font-size-sm)]',
-  md: 'text-[length:var(--font-size-btn-sm)]',
-  lg: 'text-[length:var(--font-size-btn-md)]',
-};
+import { sizeStyles } from './styles';
 
 const FormField = forwardRef<HTMLDivElement, FormFieldProps>((props, ref) => {
   const {
