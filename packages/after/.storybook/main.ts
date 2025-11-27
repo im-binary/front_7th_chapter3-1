@@ -10,5 +10,25 @@ const config: StorybookConfig = {
     '@storybook/addon-onboarding',
   ],
   framework: '@storybook/react-vite',
+  typescript: {
+    reactDocgen: 'react-docgen-typescript',
+    reactDocgenTypescriptOptions: {
+      shouldExtractLiteralValuesFromEnum: true,
+      shouldRemoveUndefinedFromOptional: true,
+      propFilter: (prop) => {
+        // radix-ui나 react의 기본 props 제외
+        if (prop.parent) {
+          const parentFileName = prop.parent.fileName;
+          if (parentFileName.includes('node_modules/@radix-ui')) {
+            return false;
+          }
+          if (parentFileName.includes('node_modules/@types/react')) {
+            return false;
+          }
+        }
+        return true;
+      },
+    },
+  },
 };
 export default config;
