@@ -7,9 +7,6 @@ const inputVariants = cva(
   [
     // Base styles
     'w-full',
-    'px-[var(--spacing-sm)]',
-    'py-[var(--spacing-sm)]',
-    'text-[length:var(--font-size-btn-md)]',
     'text-[var(--color-text-primary)]',
     'border',
     'rounded-[3px]',
@@ -25,25 +22,53 @@ const inputVariants = cva(
   ],
   {
     variants: {
+      size: {
+        sm: [
+          'px-[var(--spacing-xs)]',
+          'py-[var(--spacing-xs)]',
+          'text-[length:var(--font-size-sm)]',
+        ],
+        md: [
+          'px-[var(--spacing-sm)]',
+          'py-[var(--spacing-sm)]',
+          'text-[length:var(--font-size-btn-md)]',
+        ],
+        lg: [
+          'px-[var(--spacing-md)]',
+          'py-[var(--spacing-md)]',
+          'text-[length:var(--font-size-btn-lg)]',
+        ],
+      },
       error: {
         true: 'border-[var(--color-danger-500)]',
         false: 'border-[var(--color-gray-400)]',
       },
     },
     defaultVariants: {
+      size: 'md',
       error: false,
     },
   }
 );
 
 const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
-  const { className, type = 'text', error, ...restProps } = props;
+  const {
+    className,
+    type = 'text',
+    size = 'md',
+    error,
+    value,
+    onChange,
+    ...restProps
+  } = props;
 
   return (
     <input
       ref={ref}
       type={type}
-      className={cn(inputVariants({ error, className }))}
+      value={value}
+      onChange={onChange}
+      className={cn(inputVariants({ size, error, className }))}
       {...restProps}
     />
   );
