@@ -10,7 +10,6 @@ export const textareaVariants = cva(
     'leading-[var(--line-height-tight)]',
     'border',
     'rounded-[4px]',
-    'bg-[var(--color-bg-primary)]',
     'box-border',
     'transition-[border-color]',
     'duration-[var(--transition-duration-base)]',
