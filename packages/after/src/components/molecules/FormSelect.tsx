@@ -1,5 +1,5 @@
 import React from 'react';
-import { Select } from '@/components/ui/Select';
+import { Form } from '@/components/ui/Form';
 
 interface Option {
   value: string;
@@ -37,53 +37,23 @@ export const FormSelect = React.forwardRef<HTMLButtonElement, FormSelectProps>(
     } = props;
 
     return (
-      <div className="mb-[var(--spacing-md)]">
-        {label && (
-          <label
-            htmlFor={name}
-            className="block mb-[var(--spacing-sm)] text-[var(--color-gray-900)] text-[length:var(--font-size-btn-sm)] font-[var(--font-weight-bold)]"
-          >
-            {label}
-            {required && (
-              <span className="text-[var(--color-danger-500)]">*</span>
-            )}
-          </label>
-        )}
-
-        <Select
+      <Form.Field
+        name={name}
+        label={label}
+        error={error}
+        helpText={helpText}
+        required={required}
+        size={size}
+      >
+        <Form.Select
+          ref={ref}
+          options={options}
+          placeholder={placeholder}
           value={value}
           onValueChange={onChange}
           disabled={disabled}
-          size={size}
-        >
-          <Select.Trigger
-            ref={ref}
-            id={name}
-            error={!!error}
-            disabled={disabled}
-          >
-            <Select.Value placeholder={placeholder} />
-          </Select.Trigger>
-          <Select.Content>
-            {options.map((option) => (
-              <Select.Item key={option.value} value={option.value}>
-                {option.label}
-              </Select.Item>
-            ))}
-          </Select.Content>
-        </Select>
-
-        {error && (
-          <span className="block mt-[var(--spacing-xs)] text-[var(--color-danger-500)] text-[length:var(--font-size-sm)]">
-            {error}
-          </span>
-        )}
-        {helpText && !error && (
-          <span className="block mt-[var(--spacing-xs)] text-[var(--color-gray-600)] text-[length:var(--font-size-sm)]">
-            {helpText}
-          </span>
-        )}
-      </div>
+        />
+      </Form.Field>
     );
   }
 );

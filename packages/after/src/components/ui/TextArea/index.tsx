@@ -1,16 +1,13 @@
-import * as React from 'react';
 import { cn } from '@/lib/utils';
 import { cva } from 'class-variance-authority';
 import type { TextareaProps } from './types';
+import { forwardRef } from 'react';
 
 export const textareaVariants = cva(
   [
     // Base styles
     'w-full',
     'min-h-[6em]',
-    'px-[var(--spacing-md)]',
-    'py-[var(--spacing-md)]',
-    'text-[length:var(--font-size-lg)]',
     'text-[var(--color-text-primary)]',
     'font-[var(--font-weight-normal)]',
     'leading-[var(--line-height-tight)]',
@@ -26,30 +23,52 @@ export const textareaVariants = cva(
     // Focus state
     'focus:border-[var(--color-primary-500)]',
     'focus:border-2',
-    'focus:px-[calc(var(--spacing-md)-1px)]',
-    'focus:py-[calc(var(--spacing-md)-1px)]',
     // Disabled state
     'disabled:bg-[var(--color-text-disabled)]',
     'disabled:cursor-not-allowed',
   ],
   {
     variants: {
+      size: {
+        sm: [
+          'px-[var(--spacing-xs)]',
+          'py-[var(--spacing-xs)]',
+          'text-[length:var(--font-size-xs)]',
+          'focus:px-[calc(var(--spacing-xs)-1px)]',
+          'focus:py-[calc(var(--spacing-xs)-1px)]',
+        ],
+        md: [
+          'px-[var(--spacing-sm)]',
+          'py-[var(--spacing-sm)]',
+          'text-[length:var(--font-size-btn-md)]',
+          'focus:px-[calc(var(--spacing-sm)-1px)]',
+          'focus:py-[calc(var(--spacing-sm)-1px)]',
+        ],
+        lg: [
+          'px-[var(--spacing-md)]',
+          'py-[var(--spacing-md)]',
+          'text-[length:var(--font-size-btn-lg)]',
+          'focus:px-[calc(var(--spacing-md)-1px)]',
+          'focus:py-[calc(var(--spacing-md)-1px)]',
+        ],
+      },
       error: {
         true: 'border-[var(--color-danger-500)]',
         false: 'border-[var(--color-border-strong)]',
       },
     },
     defaultVariants: {
+      size: 'md',
       error: false,
     },
   }
 );
 
-export const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
-  ({ value, onChange, className, error, ...props }, ref) => {
+export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
+  ({ value, onChange, className, size, error, ...props }, ref) => {
     return (
       <textarea
-        className={cn(textareaVariants({ error, className }))}
+        className={cn(textareaVariants({ size, error, className }))}
         ref={ref}
         value={value}
         onChange={onChange}
@@ -58,3 +77,5 @@ export const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
     );
   }
 );
+
+Textarea.displayName = 'Textarea';

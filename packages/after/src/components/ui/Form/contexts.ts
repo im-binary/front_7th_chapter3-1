@@ -1,21 +1,18 @@
-import { createContext } from 'react';
-import { type FieldValues, type FieldPath } from 'react-hook-form';
+import { createContext } from '@radix-ui/react-context';
 
-type FormFieldContextValue<
-  TFieldValues extends FieldValues = FieldValues,
-  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
-> = {
-  name: TName;
+interface FormFieldContextValue {
+  id: string;
+  name: string;
   size?: 'sm' | 'md' | 'lg';
   error?: string;
-};
+  required?: boolean;
+}
 
-export const FormFieldContext = createContext<FormFieldContextValue | null>(
-  null
-);
-
-type FormItemContextValue = {
-  id: string;
-};
-
-export const FormItemContext = createContext<FormItemContextValue | null>(null);
+export const [FormFieldProvider, useFormFieldContext] =
+  createContext<FormFieldContextValue>('FormField', {
+    id: '',
+    name: '',
+    size: 'md',
+    error: undefined,
+    required: false,
+  });

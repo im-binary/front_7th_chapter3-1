@@ -1,12 +1,15 @@
 import { forwardRef, useState } from 'react';
-import { Input } from '@/components/ui/Input';
+import { Form } from '@/components/ui/Form';
 import type { InputProps } from '@/components/ui/Input/types';
 
-interface FormInputProps extends Omit<InputProps, 'onChange'> {
+interface FormInputProps
+  extends Omit<InputProps, 'onChange' | 'size' | 'error'> {
   name: string;
   label?: string;
   helpText?: string;
   required?: boolean;
+  size?: 'sm' | 'md' | 'lg';
+  error?: string;
   onChange?: (value: string) => void;
 
   // 🚨 도메인 관심사 추가
@@ -27,6 +30,7 @@ const FormInput = forwardRef<HTMLInputElement, FormInputProps>((props, ref) => {
     disabled = false,
     error,
     helpText,
+    size = 'md',
     fieldType = 'normal',
     entityType,
     checkBusinessRules = false,
@@ -95,44 +99,24 @@ const FormInput = forwardRef<HTMLInputElement, FormInputProps>((props, ref) => {
   const displayError = error || internalError;
 
   return (
-    <div className="mb-[var(--spacing-md)]">
-      {label && (
-        <label
-          htmlFor={name}
-          className="block mb-[var(--spacing-sm)] text-[var(--color-gray-900)] text-[length:var(--font-size-btn-sm)] font-[var(--font-weight-bold)]"
-        >
-          {label}
-          {required && (
-            <span className="text-[var(--color-danger-500)]">*</span>
-          )}
-        </label>
-      )}
-
-      <Input
+    <Form.Field
+      name={name}
+      label={label}
+      error={displayError}
+      helpText={helpText}
+      required={required}
+      size={size}
+    >
+      <Form.Input
         ref={ref}
-        id={name}
-        name={name}
         type={type}
         value={value}
         onChange={handleChange}
         placeholder={placeholder}
-        required={required}
         disabled={disabled}
-        error={!!displayError}
         {...restProps}
       />
-
-      {displayError && (
-        <span className="block mt-[var(--spacing-xs)] text-[var(--color-danger-500)] text-[length:var(--font-size-sm)]">
-          {displayError}
-        </span>
-      )}
-      {helpText && !displayError && (
-        <span className="block mt-[var(--spacing-xs)] text-[var(--color-gray-600)] text-[length:var(--font-size-sm)]">
-          {helpText}
-        </span>
-      )}
-    </div>
+    </Form.Field>
   );
 });
 

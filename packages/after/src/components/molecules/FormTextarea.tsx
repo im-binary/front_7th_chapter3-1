@@ -1,5 +1,5 @@
 import React from 'react';
-import { Textarea } from '@/components/ui/TextArea';
+import { Form } from '@/components/ui/Form';
 
 // Textarea Component - Yet another inconsistent API
 interface FormTextareaProps {
@@ -12,6 +12,7 @@ interface FormTextareaProps {
   disabled?: boolean;
   error?: string;
   helpText?: string;
+  size?: 'sm' | 'md' | 'lg';
   rows?: number;
 }
 
@@ -25,44 +26,25 @@ export const FormTextarea: React.FC<FormTextareaProps> = ({
   disabled = false,
   error,
   helpText,
+  size = 'md',
   rows = 4,
 }) => {
   return (
-    <div className="mb-[var(--spacing-md)]">
-      {label && (
-        <label
-          htmlFor={name}
-          className="block mb-[var(--spacing-sm)] text-[var(--color-gray-900)] text-[length:var(--font-size-btn-sm)] font-[var(--font-weight-bold)]"
-        >
-          {label}
-          {required && (
-            <span className="text-[var(--color-danger-500)]">*</span>
-          )}
-        </label>
-      )}
-
-      <Textarea
-        id={name}
-        name={name}
+    <Form.Field
+      name={name}
+      label={label}
+      error={error}
+      helpText={helpText}
+      required={required}
+      size={size}
+    >
+      <Form.Textarea
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
-        required={required}
         disabled={disabled}
         rows={rows}
-        error={!!error}
       />
-
-      {error && (
-        <span className="block mt-[var(--spacing-xs)] text-[var(--color-danger-500)] text-[length:var(--font-size-sm)]">
-          {error}
-        </span>
-      )}
-      {helpText && !error && (
-        <span className="block mt-[var(--spacing-xs)] text-[var(--color-gray-600)] text-[length:var(--font-size-sm)]">
-          {helpText}
-        </span>
-      )}
-    </div>
+    </Form.Field>
   );
 };

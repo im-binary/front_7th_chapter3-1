@@ -1,24 +1,18 @@
-import { forwardRef, useId, type ComponentRef } from 'react';
-import * as LabelPrimitive from '@radix-ui/react-label';
-import { Slot } from '@radix-ui/react-slot';
-import {
-  Controller,
-  FormProvider,
-  type FieldPath,
-  type FieldValues,
-} from 'react-hook-form';
+import { forwardRef, useId, type FormHTMLAttributes } from 'react';
+import { Input } from '@/components/ui/Input';
+import { Select } from '@/components/ui/Select';
+import { Textarea } from '@/components/ui/TextArea';
 import { cn } from '@/lib/utils';
-import { Label } from './label';
-import { FormFieldContext, FormItemContext } from './contexts';
-import { useFormField } from './useFormField';
 import type {
-  FormFieldProps,
-  FormItemProps,
-  FormLabelProps,
-  FormControlProps,
   FormDescriptionProps,
+  FormFieldProps,
+  FormInputProps,
+  FormLabelProps,
   FormMessageProps,
+  FormSelectProps,
+  FormTextareaProps,
 } from './types';
+import { FormFieldProvider, useFormFieldContext } from './contexts';
 
 const sizeStyles = {
   sm: 'text-[length:var(--font-size-sm)]',
@@ -26,71 +20,115 @@ const sizeStyles = {
   lg: 'text-[length:var(--font-size-btn-md)]',
 };
 
-const FormField = <
-  TFieldValues extends FieldValues = FieldValues,
-  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
->(
-  props: FormFieldProps<TFieldValues, TName>
-) => {
-  const { name, size, error, ...controllerProps } = props;
-
-  return (
-    <FormFieldContext.Provider value={{ name, size, error }}>
-      <Controller name={name} {...controllerProps} />
-    </FormFieldContext.Provider>
-  );
-};
-
-const FormItem = forwardRef<HTMLDivElement, FormItemProps>((props, ref) => {
-  const { className, ...restProps } = props;
+const FormField = forwardRef<HTMLDivElement, FormFieldProps>((props, ref) => {
+  const {
+    name,
+    label,
+    error,
+    helpText,
+    required = false,
+    size = 'md',
+    children,
+  } = props;
 
   const id = useId();
 
   return (
-    <FormItemContext.Provider value={{ id }}>
-      <div ref={ref} className={cn('space-y-2', className)} {...restProps} />
-    </FormItemContext.Provider>
+    <FormFieldProvider
+      id={id}
+      name={name}
+      size={size}
+      error={error}
+      required={required}
+    >
+      <div ref={ref} className="space-y-2">
+        {label && (
+          <FormLabel>
+            {label}
+            {required && (
+              <span className="text-[var(--color-danger-500)]">*</span>
+            )}
+          </FormLabel>
+        )}
+        {children}
+        {error && <FormMessage>{error}</FormMessage>}
+        {helpText && !error && <FormDescription>{helpText}</FormDescription>}
+      </div>
+    </FormFieldProvider>
   );
 });
 
-const FormLabel = forwardRef<
-  ComponentRef<typeof LabelPrimitive.Root>,
-  FormLabelProps
->((props, ref) => {
+const FormLabel = forwardRef<HTMLLabelElement, FormLabelProps>((props, ref) => {
   const { className, ...restProps } = props;
-  const { size, error, formItemId } = useFormField();
+  const { id, size, error } = useFormFieldContext('Form.Label');
 
   return (
-    <Label
+    <label
       ref={ref}
+      htmlFor={id}
       className={cn(
         'block mb-[var(--spacing-sm)] text-[var(--color-gray-900)] font-[var(--font-weight-bold)]',
         sizeStyles[size || 'md'],
         error && 'text-[var(--color-danger-500)]',
         className
       )}
-      htmlFor={formItemId}
       {...restProps}
     />
   );
 });
 
-const FormControl = forwardRef<ComponentRef<typeof Slot>, FormControlProps>(
+const FormInput = forwardRef<HTMLInputElement, FormInputProps>((props, ref) => {
+  const { id, name, size, error, required } = useFormFieldContext('Form.Input');
+
+  return (
+    <Input
+      ref={ref}
+      id={id}
+      name={name}
+      size={size}
+      error={!!error}
+      required={required}
+      {...props}
+    />
+  );
+});
+
+const FormSelect = forwardRef<HTMLButtonElement, FormSelectProps>(
   (props, ref) => {
-    const { size, error, formItemId, formDescriptionId, formMessageId } =
-      useFormField();
+    const { options, placeholder, ...restProps } = props;
+    const { id, name, size, error } = useFormFieldContext('Form.Select');
 
     return (
-      <Slot
+      <Select size={size} {...restProps}>
+        <Select.Trigger ref={ref} id={id} name={name} error={!!error}>
+          <Select.Value placeholder={placeholder} />
+        </Select.Trigger>
+
+        <Select.Content>
+          {options.map((option) => (
+            <Select.Item key={option.value} value={option.value}>
+              {option.label}
+            </Select.Item>
+          ))}
+        </Select.Content>
+      </Select>
+    );
+  }
+);
+
+const FormTextarea = forwardRef<HTMLTextAreaElement, FormTextareaProps>(
+  (props, ref) => {
+    const { id, name, size, error, required } =
+      useFormFieldContext('Form.Textarea');
+
+    return (
+      <Textarea
         ref={ref}
-        id={formItemId}
-        aria-describedby={
-          !error
-            ? `${formDescriptionId}`
-            : `${formDescriptionId} ${formMessageId}`
-        }
-        aria-invalid={!!error}
-        {...(size && { size })}
+        id={id}
+        name={name}
+        size={size}
+        error={!!error}
+        required={required}
         {...props}
       />
     );
@@ -100,14 +138,12 @@ const FormControl = forwardRef<ComponentRef<typeof Slot>, FormControlProps>(
 const FormDescription = forwardRef<HTMLParagraphElement, FormDescriptionProps>(
   (props, ref) => {
     const { className, ...restProps } = props;
-    const { formDescriptionId } = useFormField();
 
     return (
       <p
         ref={ref}
-        id={formDescriptionId}
         className={cn(
-          'block mt-[var(--spacing-xs)] text-[var(--color-gray-600)]',
+          'block mt-[var(--spacing-xs)] text-[length:var(--font-size-sm)] text-[var(--color-gray-600)]',
           className
         )}
         {...restProps}
@@ -118,46 +154,38 @@ const FormDescription = forwardRef<HTMLParagraphElement, FormDescriptionProps>(
 
 const FormMessage = forwardRef<HTMLParagraphElement, FormMessageProps>(
   (props, ref) => {
-    const { className, children, ...restProps } = props;
-
-    const { error, size, formMessageId } = useFormField();
-    const body = error
-      ? typeof error === 'string'
-        ? error
-        : String(error?.message ?? '')
-      : children;
-
-    if (!body) {
-      return null;
-    }
-
-    const isError = !!error;
+    const { className, ...restProps } = props;
+    const { size } = useFormFieldContext('Form.Message');
 
     return (
       <p
         ref={ref}
-        id={formMessageId}
         className={cn(
           'block mt-[var(--spacing-xs)] text-[length:var(--font-size-sm)]',
           sizeStyles[size || 'md'],
-          isError
-            ? 'text-[var(--color-danger-500)]'
-            : 'text-[var(--color-gray-600)]',
+          'text-[var(--color-danger-500)]',
           className
         )}
         {...restProps}
-      >
-        {body}
-      </p>
+      />
     );
   }
 );
 
-export const Form = Object.assign(FormProvider, {
+const FormRoot = forwardRef<
+  HTMLFormElement,
+  FormHTMLAttributes<HTMLFormElement>
+>((props, ref) => {
+  return <form ref={ref} {...props} />;
+});
+
+// Export as compound component
+export const Form = Object.assign(FormRoot, {
   Field: FormField,
-  Item: FormItem,
   Label: FormLabel,
-  Control: FormControl,
+  Input: FormInput,
+  Select: FormSelect,
+  Textarea: FormTextarea,
   Description: FormDescription,
   Message: FormMessage,
 });

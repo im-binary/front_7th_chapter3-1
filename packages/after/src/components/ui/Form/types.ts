@@ -1,24 +1,31 @@
-import type * as React from 'react';
-import type * as LabelPrimitive from '@radix-ui/react-label';
-import type { Slot } from '@radix-ui/react-slot';
-import type { ControllerProps, FieldPath, FieldValues } from 'react-hook-form';
+import type { HTMLAttributes, LabelHTMLAttributes, ReactNode } from 'react';
+import type { InputProps } from '../Input/types';
+import type { SelectProps } from '../Select/types';
+import type { TextareaProps } from '../TextArea/types';
 
-export type FormFieldProps<
-  TFieldValues extends FieldValues = FieldValues,
-  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
-> = ControllerProps<TFieldValues, TName> & {
-  size?: 'sm' | 'md' | 'lg';
+export interface FormFieldProps {
+  name: string;
+  label?: string;
   error?: string;
-};
+  helpText?: string;
+  required?: boolean;
+  size?: 'sm' | 'md' | 'lg';
+  children: ReactNode;
+}
 
-export type FormItemProps = React.HTMLAttributes<HTMLDivElement>;
+export interface FormLabelProps extends LabelHTMLAttributes<HTMLLabelElement> {}
 
-export type FormLabelProps = React.ComponentPropsWithoutRef<
-  typeof LabelPrimitive.Root
->;
+export interface FormInputProps extends Omit<InputProps, 'size' | 'error'> {}
 
-export type FormControlProps = React.ComponentPropsWithoutRef<typeof Slot>;
+export interface FormSelectProps extends Omit<SelectProps, 'size' | 'error'> {
+  options: Array<{ value: string; label: string }>;
+  placeholder?: string;
+}
 
-export type FormDescriptionProps = React.HTMLAttributes<HTMLParagraphElement>;
+export interface FormTextareaProps extends Omit<TextareaProps, 'error'> {}
 
-export type FormMessageProps = React.HTMLAttributes<HTMLParagraphElement>;
+export interface FormDescriptionProps
+  extends HTMLAttributes<HTMLParagraphElement> {}
+
+export interface FormMessageProps
+  extends HTMLAttributes<HTMLParagraphElement> {}
