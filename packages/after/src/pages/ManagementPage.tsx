@@ -354,7 +354,8 @@ export const ManagementPage: React.FC = () => {
       header: '조회수',
       width: '100px',
       sortable: true,
-      render: (value) => (value as number).toLocaleString(),
+      render: (value) =>
+        typeof value === 'number' ? value.toLocaleString() : '',
     },
     { key: 'createdAt', header: '작성일', width: '120px', sortable: true },
     {
