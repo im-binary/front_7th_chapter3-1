@@ -11,7 +11,7 @@ const meta = {
   argTypes: {
     variant: {
       control: 'select',
-      options: ['primary', 'secondary', 'danger', 'success'],
+      options: ['primary', 'secondary', 'danger', 'success', 'ghost'],
       description: 'Button의 색상 variant',
     },
     size: {
@@ -76,6 +76,13 @@ export const AllVariants: Story = {
           <Button variant="success" outline>
             Success
           </Button>
+        </div>
+      </div>
+
+      <div className="space-y-2">
+        <h3 className="font-bold text-sm">Ghost Buttons</h3>
+        <div className="flex gap-2">
+          <Button variant="ghost">Ghost</Button>
         </div>
       </div>
 

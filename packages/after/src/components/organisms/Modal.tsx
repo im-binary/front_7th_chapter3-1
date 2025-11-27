@@ -1,4 +1,6 @@
 import React, { useEffect } from 'react';
+import { IconButton } from '../ui/IconButton';
+import { X } from 'lucide-react';
 
 interface ModalProps {
   isOpen: boolean;
@@ -40,9 +42,13 @@ export const Modal: React.FC<ModalProps> = ({
         {title && (
           <div className="modal-header">
             <h3 className="modal-title">{title}</h3>
-            <button className="modal-close" onClick={onClose}>
-              ×
-            </button>
+            <IconButton
+              size="sm"
+              variant="ghost"
+              aria-label="닫기"
+              onClick={onClose}
+              icon={<X className="h-5 w-5" />}
+            />
           </div>
         )}
         <div className="modal-body">{children}</div>

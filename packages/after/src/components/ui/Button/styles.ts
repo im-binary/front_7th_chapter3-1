@@ -8,7 +8,6 @@ export const buttonVariants = cva(
     'whitespace-nowrap',
     'disabled:opacity-60',
     'disabled:cursor-not-allowed',
-    'border',
   ],
   {
     variants: {
@@ -16,26 +15,36 @@ export const buttonVariants = cva(
         primary: [
           'bg-[var(--color-primary-500)]',
           'text-[var(--color-white)]',
+          'border',
           'border-[var(--color-primary-600)]',
           'hover:bg-[var(--color-primary-600)]',
         ],
         secondary: [
           'bg-[var(--color-secondary-100)]',
           'text-[var(--color-gray-900)]',
+          'border',
           'border-[var(--color-secondary-300)]',
           'hover:bg-[var(--color-secondary-200)]',
         ],
         danger: [
           'bg-[var(--color-danger-500)]',
           'text-[var(--color-white)]',
+          'border',
           'border-[var(--color-danger-600)]',
           'hover:bg-[var(--color-danger-600)]',
         ],
         success: [
           'bg-[var(--color-success-500)]',
           'text-[var(--color-white)]',
+          'border',
           'border-[var(--color-success-600)]',
           'hover:bg-[var(--color-success-600)]',
+        ],
+        ghost: [
+          'bg-transparent',
+          'border-transparent',
+          'text-[var(--color-gray-700)]',
+          'hover:bg-[var(--color-secondary-100)]',
         ],
       },
       size: {
@@ -56,7 +65,7 @@ export const buttonVariants = cva(
         ],
       },
       outline: {
-        true: 'bg-transparent',
+        true: ['bg-transparent', 'border'],
       },
       fullWidth: {
         true: 'w-full',

@@ -19,7 +19,7 @@ export interface ButtonProps
    * 버튼의 색상 variant
    * @default 'primary'
    */
-  variant?: 'primary' | 'secondary' | 'danger' | 'success';
+  variant?: 'primary' | 'secondary' | 'danger' | 'success' | 'ghost';
 
   /**
    * 버튼의 크기
