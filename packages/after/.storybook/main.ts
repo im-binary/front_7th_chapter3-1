@@ -9,6 +9,11 @@ const config: StorybookConfig = {
     '@storybook/addon-docs',
     '@storybook/addon-onboarding',
   ],
+  staticDirs: ['../public'],
+  viteFinal: async (config) => {
+    config.base = '/front_7th_chapter3-1/story-book/';
+    return config;
+  },
   framework: '@storybook/react-vite',
   typescript: {
     reactDocgen: 'react-docgen-typescript',
