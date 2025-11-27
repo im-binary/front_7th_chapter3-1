@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Button } from '../components/atoms';
-import { Alert, Table, Modal } from '../components/organisms';
+import { Badge } from '../components/atoms/Badge';
+import { Alert, Modal } from '../components/organisms';
+import { DataTable } from '../components/organisms/DataTable';
+import type { Column } from '../components/organisms/DataTable/types';
 import { FormInput, FormSelect, FormTextarea } from '../components/molecules';
 import { userService } from '../services/userService';
 import { postService } from '../services/postService';
@@ -266,32 +269,141 @@ export const ManagementPage: React.FC = () => {
     }
   };
 
-  // 🚨 Table 컴포넌트에 로직을 위임하여 간소화
-  const renderTableColumns = () => {
-    if (entityType === 'user') {
-      return [
-        { key: 'id', header: 'ID', width: '60px' },
-        { key: 'username', header: '사용자명', width: '150px' },
-        { key: 'email', header: '이메일' },
-        { key: 'role', header: '역할', width: '120px' },
-        { key: 'status', header: '상태', width: '120px' },
-        { key: 'createdAt', header: '생성일', width: '120px' },
-        { key: 'lastLogin', header: '마지막 로그인', width: '140px' },
-        { key: 'actions', header: '관리', width: '200px' },
-      ];
-    } else {
-      return [
-        { key: 'id', header: 'ID', width: '60px' },
-        { key: 'title', header: '제목' },
-        { key: 'author', header: '작성자', width: '120px' },
-        { key: 'category', header: '카테고리', width: '140px' },
-        { key: 'status', header: '상태', width: '120px' },
-        { key: 'views', header: '조회수', width: '100px' },
-        { key: 'createdAt', header: '작성일', width: '120px' },
-        { key: 'actions', header: '관리', width: '250px' },
-      ];
-    }
-  };
+  const getUserColumns = (): Column<User>[] => [
+    { key: 'id', header: 'ID', width: '60px', sortable: true },
+    { key: 'username', header: '사용자명', width: '150px', sortable: true },
+    { key: 'email', header: '이메일', sortable: true },
+    {
+      key: 'role',
+      header: '역할',
+      width: '120px',
+      render: (value) => <Badge userRole={value as User['role']} showIcon />,
+    },
+    {
+      key: 'status',
+      header: '상태',
+      width: '120px',
+      render: (value) => {
+        const badgeStatus =
+          value === 'active'
+            ? 'published'
+            : value === 'inactive'
+              ? 'draft'
+              : 'rejected';
+        return <Badge status={badgeStatus} showIcon />;
+      },
+    },
+    { key: 'createdAt', header: '생성일', width: '120px', sortable: true },
+    {
+      key: 'lastLogin',
+      header: '마지막 로그인',
+      width: '140px',
+      render: (value) => (value ? String(value) : '-'),
+    },
+    {
+      key: 'actions',
+      header: '관리',
+      width: '200px',
+      render: (_, row) => (
+        <div className="flex gap-2">
+          <Button size="sm" variant="primary" onClick={() => handleEdit(row)}>
+            수정
+          </Button>
+          <Button
+            size="sm"
+            variant="danger"
+            onClick={() => handleDelete(row.id)}
+          >
+            삭제
+          </Button>
+        </div>
+      ),
+    },
+  ];
+
+  const getPostColumns = (): Column<Post>[] => [
+    { key: 'id', header: 'ID', width: '60px', sortable: true },
+    { key: 'title', header: '제목', sortable: true },
+    { key: 'author', header: '작성자', width: '120px', sortable: true },
+    {
+      key: 'category',
+      header: '카테고리',
+      width: '140px',
+      render: (value) => {
+        const type =
+          value === 'development'
+            ? 'primary'
+            : value === 'design'
+              ? 'info'
+              : 'danger';
+        return (
+          <Badge type={type} pill>
+            {String(value)}
+          </Badge>
+        );
+      },
+    },
+    {
+      key: 'status',
+      header: '상태',
+      width: '120px',
+      render: (value) => <Badge status={value as Post['status']} showIcon />,
+    },
+    {
+      key: 'views',
+      header: '조회수',
+      width: '100px',
+      sortable: true,
+      render: (value) => (value as number).toLocaleString(),
+    },
+    { key: 'createdAt', header: '작성일', width: '120px', sortable: true },
+    {
+      key: 'actions',
+      header: '관리',
+      width: '250px',
+      render: (_, row) => (
+        <div className="flex gap-2 flex-wrap">
+          <Button size="sm" variant="primary" onClick={() => handleEdit(row)}>
+            수정
+          </Button>
+          {row.status === 'draft' && (
+            <Button
+              size="sm"
+              variant="success"
+              onClick={() => handleStatusAction(row.id, 'publish')}
+            >
+              게시
+            </Button>
+          )}
+          {row.status === 'published' && (
+            <Button
+              size="sm"
+              variant="secondary"
+              onClick={() => handleStatusAction(row.id, 'archive')}
+            >
+              보관
+            </Button>
+          )}
+          {row.status === 'archived' && (
+            <Button
+              size="sm"
+              variant="primary"
+              onClick={() => handleStatusAction(row.id, 'restore')}
+            >
+              복원
+            </Button>
+          )}
+          <Button
+            size="sm"
+            variant="danger"
+            onClick={() => handleDelete(row.id)}
+          >
+            삭제
+          </Button>
+        </div>
+      ),
+    },
+  ];
 
   const stats = getStats();
 
@@ -533,21 +645,27 @@ export const ManagementPage: React.FC = () => {
               style={{
                 border: '1px solid #ddd',
                 background: 'white',
-                overflow: 'auto',
               }}
             >
-              <Table
-                columns={renderTableColumns()}
-                data={data}
-                striped
-                hover
-                entityType={entityType}
-                onEdit={handleEdit}
-                onDelete={handleDelete}
-                onPublish={(id) => handleStatusAction(id, 'publish')}
-                onArchive={(id) => handleStatusAction(id, 'archive')}
-                onRestore={(id) => handleStatusAction(id, 'restore')}
-              />
+              {entityType === 'user' ? (
+                <DataTable<User>
+                  columns={getUserColumns()}
+                  data={data as User[]}
+                  striped
+                  hover
+                  sortable
+                  pageSize={10}
+                />
+              ) : (
+                <DataTable<Post>
+                  columns={getPostColumns()}
+                  data={data as Post[]}
+                  striped
+                  hover
+                  sortable
+                  pageSize={10}
+                />
+              )}
             </div>
           </div>
         </div>
