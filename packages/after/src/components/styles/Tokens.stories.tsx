@@ -10,6 +10,7 @@ const meta = {
 export default meta;
 
 type Story = StoryObj<typeof meta>;
+type ColorsArgs = { dark?: boolean };
 
 const colorGroups: { title: string; vars: string[] }[] = [
   {
@@ -134,12 +135,41 @@ const Swatch: FC<{ name: string }> = ({ name }) => {
   );
 };
 
-export const Colors: Story = {
-  render: () => (
-    <div style={{ padding: 24 }}>
+export const Colors = {
+  render: (args: ColorsArgs) => <ColorsDemo dark={!!args.dark} />,
+  args: { dark: false },
+  argTypes: { dark: { control: 'boolean' } },
+} as StoryObj<typeof meta>;
+
+const ColorsDemo: FC<{ dark?: boolean }> = ({ dark = false }) => {
+  useEffect(() => {
+    const el = document.documentElement;
+    if (dark) el.classList.add('dark');
+    else el.classList.remove('dark');
+    return () => {
+      el.classList.remove('dark');
+    };
+  }, [dark]);
+
+  return (
+    <div
+      style={{
+        padding: 24,
+        background: dark ? '#000' : '#fafafa',
+      }}
+    >
       {colorGroups.map((group) => (
         <section key={group.title} style={{ marginBottom: 20 }}>
-          <h3 style={{ marginBottom: 8 }}>{group.title}</h3>
+          <h3
+            style={{
+              marginBottom: 8,
+              color: dark
+                ? 'var(--color-text-primary)'
+                : 'var(--color-text-secondary)',
+            }}
+          >
+            {group.title}
+          </h3>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12 }}>
             {group.vars.map((v) => (
               <Swatch key={v} name={v} />
@@ -148,7 +178,7 @@ export const Colors: Story = {
         </section>
       ))}
     </div>
-  ),
+  );
 };
 
 export const Typography: Story = {
